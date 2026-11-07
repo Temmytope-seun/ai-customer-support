@@ -23,17 +23,14 @@ def poll_once() -> int:
 
 def main() -> None:
     logger.info("Polling every %s seconds", settings.poll_interval_seconds)
-    try:
-        while True:
-            try:
-                count = poll_once()
-                if count:
-                    logger.info("Handled %s new messages", count)
-            except Exception:
-                logger.exception("Poll failed")
-            time.sleep(settings.poll_interval_seconds)
-    except KeyboardInterrupt:
-        logger.info("Poller stopped")
+    while True:
+        try:
+            count = poll_once()
+            if count:
+                logger.info("Handled %s new messages", count)
+        except Exception:
+            logger.exception("Poll failed")
+        time.sleep(settings.poll_interval_seconds)
 
 
 if __name__ == "__main__":
